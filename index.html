@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Vue Mastery</title>
+    <title>The Sock Store</title>
     <!-- Import Styles -->
     <link rel="stylesheet" href="./assets/styles.css" />
     <!-- Import Vue.js -->
@@ -12,7 +12,7 @@
     <div id="app">
       <div class="nav-bar"></div>
 
-      <div class="cart">Cart({{ cart }})</div>
+      <div class="cart">Cart [{{ cart }}]</div>
       
       <div class="product-display">
         <div class="product-container">
@@ -20,21 +20,22 @@
             <img v-bind:src="image">
           </div>
           <div class="product-info">
-            <h1>{{ product }}</h1>
+            <h1>{{ title }}</h1>
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
             <ul>
               <li v-for="detail in details">{{ detail }}</li>
             </ul>
-
+            <p>{{msg}}</p>
             <div 
               class="color-circle" 
-              v-for="variant in variants" 
-              :key="variant.id" 
-              @mouseover="updateImage(variant.image)" 
-              :style="{ backgroundColor: variant.color }"></div>
-            <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" v-on:click="addToCart">Add to Cart</button>
-          </div>
+              v-for="(variant, index) in variants" 
+              :key="variant.id"
+              @mouseover="updateVariant(index)" 
+              :style="{ backgroundColor: variant.color }">{{variant.quantity}}</div>
+              <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" @click="addToCart">Add to Cart</button>
+              <button class="button" :class="{disabledButton: !cart}" :disabled="!cart" @click="removeFromCart">Remove</button>
+            </div>
         </div>
       </div>
     </div>
