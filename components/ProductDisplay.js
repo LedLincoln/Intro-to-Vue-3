@@ -39,6 +39,13 @@ app.component('product-display', {
           v-on:click="addToCart">
           Add to Cart
         </button>
+        <button 
+          class="button" 
+          :class="{ disabledButton: inStock }" 
+          :disabled="inStock" 
+          v-on:click="removeFromCart">
+          Remove
+        </button>
       </div>
     </div>
   </div>`,
@@ -47,16 +54,19 @@ app.component('product-display', {
         product: 'Socks',
         brand: 'Vue Mastery',
         selectedVariant: 0,
-        details: ['50% cotton', '30% wool', '20% polyester'],
+        details: ['50% cotton', '30% wool', '20% polyester', '10% hog bristle'],
         variants: [
           { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50 },
-          { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 },
+          { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 12 },
+          { id: 2235, color: 'orange', image: './assets/images/socks_orange.jpg', quantity: 6 },
+          { id: 2236, color: 'red', image: './assets/images/socks_red.jpg', quantity: 7 }
         ]
     }
   },
   methods: {
       addToCart() {
-          this.cart += 1
+          //this.cart += 1
+          this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
       },
       updateVariant(index) {
           this.selectedVariant = index
