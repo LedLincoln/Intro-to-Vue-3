@@ -10,34 +10,44 @@ app.component('review-form', {
     <textarea id="review" v-model='review'></textarea>
 
     <label for="rating">Rating:</label>
-    <select id="rating" vmodel.number="rating">
+    <select id="rating" v-model.number="rating">
       <option>5</option>
       <option>4</option>
       <option>3</option>
       <option>2</option>
       <option>1</option>
     </select>
-
+    <input type='radio' name='recommend' id='recommendyes' value='yes' v-model='recommend'>
+    <label for='recommendyes'>I recommend this item</label>
+    <input type='radio' name='recommend' id='recommendno' value='no' v-model='recommend'>
+    <label for='recommendno'>I do not recommend this item</label>
     <input class="button" type="submit" value="Submit">
   </form>`,
     data() {
         return {
             name: '',
             review: '',
-            rating: null
+            rating: null,
+            recommend: ''
         }
     },
     methods: {
         onSubmit() {
+            if(this.name === '' || this.review === '' || this.rating == null) {
+                alert("Review is incomplete. Please fill out every field.")
+                return
+            }
             let productReview = {
                 name: this.name,
                 review: this.review,
                 rating: this.rating,
+                recommend: this.recommend
             }
             this.$emit('review-submitted', productReview)
             this.name = ''
             this.review = ''
             this.rating = null
+            this.recommend = null
         }
     }
 })
